@@ -17,24 +17,22 @@
 package griffon.plugins.i18n;
 
 import griffon.util.ApplicationHolder;
-import org.springframework.context.MessageSource;
-import org.springframework.context.MessageSourceResolvable;
-import org.springframework.context.NoSuchMessageException;
+
 import java.util.List;
 import java.util.Locale;
 
 /**
  * @author Andres Almiray
  */
-public class DelegatingMessageSource implements ExtendedMessageSource {
-    private final MessageSource messageSource;
+public class DelegatingMessageSource implements MessageSource {
+    private final org.springframework.context.MessageSource messageSource;
     private static final Object[] EMPTY_ARGS = new Object[0];
 
-    public DelegatingMessageSource(MessageSource messageSource) {
+    public DelegatingMessageSource(org.springframework.context.MessageSource messageSource) {
         this.messageSource = messageSource;
     }
 
-    public MessageSource getMessageSource() {
+    public org.springframework.context.MessageSource getMessageSource() {
         return messageSource;
     }
 
@@ -47,15 +45,19 @@ public class DelegatingMessageSource implements ExtendedMessageSource {
     }
 
     public String getMessage(String s, Object[] objects, Locale locale) throws NoSuchMessageException {
-        return messageSource.getMessage(s, objects, locale);
-    }
-
-    public String getMessage(MessageSourceResolvable messageSourceResolvable, Locale locale) throws NoSuchMessageException {
-        return messageSource.getMessage(messageSourceResolvable, locale);
+        try {
+            return messageSource.getMessage(s, objects, locale);
+        } catch (org.springframework.context.NoSuchMessageException e) {
+            throw new NoSuchMessageException(s, locale);
+        }
     }
 
     public String getMessage(String key) throws NoSuchMessageException {
-        return messageSource.getMessage(key, EMPTY_ARGS, locale());
+        try {
+            return messageSource.getMessage(key, EMPTY_ARGS, locale());
+        } catch (org.springframework.context.NoSuchMessageException e) {
+            throw new NoSuchMessageException(key, locale());
+        }
     }
 
     public String getMessage(String key, String defaultMessage) {
@@ -63,7 +65,11 @@ public class DelegatingMessageSource implements ExtendedMessageSource {
     }
 
     public String getMessage(String key, Locale locale) throws NoSuchMessageException {
-        return messageSource.getMessage(key, EMPTY_ARGS, locale);
+        try {
+            return messageSource.getMessage(key, EMPTY_ARGS, locale);
+        } catch (org.springframework.context.NoSuchMessageException e) {
+            throw new NoSuchMessageException(key, locale);
+        }
     }
 
     public String getMessage(String key, String defaultMessage, Locale locale) {
@@ -71,7 +77,11 @@ public class DelegatingMessageSource implements ExtendedMessageSource {
     }
 
     public String getMessage(String key, List<?> args) throws NoSuchMessageException {
-        return messageSource.getMessage(key, args.toArray(new Object[args.size()]), locale());
+        try {
+            return messageSource.getMessage(key, args.toArray(new Object[args.size()]), locale());
+        } catch (org.springframework.context.NoSuchMessageException e) {
+            throw new NoSuchMessageException(key, locale());
+        }
     }
 
     public String getMessage(String key, List<?> args, String defaultMessage) {
@@ -79,7 +89,11 @@ public class DelegatingMessageSource implements ExtendedMessageSource {
     }
 
     public String getMessage(String key, List<?> args, Locale locale) throws NoSuchMessageException {
-        return messageSource.getMessage(key, args.toArray(new Object[args.size()]), locale);
+        try {
+            return messageSource.getMessage(key, args.toArray(new Object[args.size()]), locale);
+        } catch (org.springframework.context.NoSuchMessageException e) {
+            throw new NoSuchMessageException(key, locale);
+        }
     }
 
     public String getMessage(String key, List<?> args, String defaultMessage, Locale locale) {
@@ -87,14 +101,14 @@ public class DelegatingMessageSource implements ExtendedMessageSource {
     }
 
     public String getMessage(String key, Object[] args) throws NoSuchMessageException {
-        return messageSource.getMessage(key, args, locale());
+        try {
+            return messageSource.getMessage(key, args, locale());
+        } catch (org.springframework.context.NoSuchMessageException e) {
+            throw new NoSuchMessageException(key, locale());
+        }
     }
 
     public String getMessage(String key, Object[] args, String defaultMessage) {
         return messageSource.getMessage(key, args, defaultMessage, locale());
-    }
-
-    public String getMessage(MessageSourceResolvable messageSourceResolvable) throws NoSuchMessageException {
-        return messageSource.getMessage(messageSourceResolvable, locale());
     }
 }

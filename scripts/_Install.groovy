@@ -18,9 +18,8 @@
  * @author Andres Almiray
  */
 
-// check to see if we already have a I18nGriffonAddon
-configText = '''root.'I18nGriffonAddon'.addon=true'''
-if(!(builderConfigFile.text.contains(configText))) {
-    println 'Adding I18nGriffonAddon to Builder.groovy'
-    builderConfigFile.text += '\n' + configText + '\n'
-}
+def configFile = new File(basedir, 'griffon-app/conf/Config.groovy')
+def config = configFile.text
+
+if (!config.contains('i18n.provider')) configFile.append '''\ni18n.provider = 'i18n' \n'''
+if (!config.contains('i18n.basenames')) configFile.append '''i18n.basenames = ['messages'] \n'''

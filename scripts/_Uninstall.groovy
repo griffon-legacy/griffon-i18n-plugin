@@ -18,9 +18,5 @@
  * @author Andres Almiray
  */
 
-// check to see if we already have a I18nGriffonAddon
-configText = '''root.'I18nGriffonAddon'.addon=true'''
-if(builderConfigFile.text.contains(configText)) {
-    println 'Removing I18nGriffonAddon from Builder.groovy'
-    builderConfigFile.text -= configText
-}
+File configFile = new File(basedir, 'griffon-app/conf/Config.groovy')
+configFile.text = configFile.text - "i18n.provider = 'i18n'"

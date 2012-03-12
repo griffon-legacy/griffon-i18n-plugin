@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 the original author or authors.
+ * Copyright 2010-2012 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,37 +14,24 @@
  * limitations under the License.
  */
 
-import org.springframework.context.MessageSource
 import griffon.core.GriffonApplication
-import griffon.plugins.i18n.MessageSourceHolder
 import griffon.plugins.i18n.DelegatingMessageSource
 import griffon.plugins.i18n.ExtendedResourceBundleMessageSource
+import griffon.plugins.i18n.MessageSourceHolder
 
 /**
  * @author Andres Almiray
+ * @author Alexander Klein
  */
 class I18nGriffonAddon {
     private static final String DEFAULT_I18N_FILE = 'messages'
+    private static final String PROVIDER_NAME = 'i18n'
 
     void addonInit(GriffonApplication app) {
         List<String> basenames = app.config.i18n?.basenames ?: [DEFAULT_I18N_FILE]
         if (!basenames.contains(DEFAULT_I18N_FILE)) basenames = [DEFAULT_I18N_FILE] + basenames
-        MessageSource messageSource = new ExtendedResourceBundleMessageSource()
-        MessageSourceHolder.messageSource = new DelegatingMessageSource(messageSource)
-        messageSource.basenames = basenames as String[]
-        MetaClass mc = app.metaClass
-        mc.messageSource = MessageSourceHolder.messageSource
-        mc.i18n = MessageSourceHolder.messageSource
-        mc.getMessage = { Object... args -> MessageSourceHolder.messageSource.getMessage(* args) }
+        org.springframework.context.MessageSource msgSrc = new ExtendedResourceBundleMessageSource();
+        msgSrc.basenames = basenames as String[]
+        MessageSourceHolder.registerMessageSource(PROVIDER_NAME, new DelegatingMessageSource(msgSrc))
     }
-
-    def methods = [
-        getMessage: { Object... args -> MessageSourceHolder.messageSource.getMessage(* args) }
-    ]
-
-    def props = [
-        messageSource: [
-                get: {-> MessageSourceHolder.messageSource }
-        ]
-    ]
 }
