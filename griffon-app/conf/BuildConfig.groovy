@@ -25,6 +25,8 @@ griffon.project.dependency.resolution = {
         //mavenRepo "http://download.java.net/maven/2/"
         //mavenRepo "http://repository.jboss.com/maven2/"
 
+        mavenRepo 'http://repository.springsource.com/maven/bundles/release'
+
         // pluginDirPath is only available when installed
         // String basePath = pluginDirPath? "${pluginDirPath}/" : ''
         // flatDir name: "${pluginName}LibDir", dirs: ["${basePath}lib"]
@@ -32,7 +34,10 @@ griffon.project.dependency.resolution = {
     dependencies {
         // specify dependencies here under either 'build', 'compile', 'runtime' or 'test' scopes eg.
 
-        // runtime 'mysql:mysql-connector-java:5.1.5'
+        def springVersion = '3.0.5.RELEASE'
+        compile("org.springframework:org.springframework.core:$springVersion") { transitive = false }
+        compile("org.springframework:org.springframework.beans:$springVersion") { transitive = false }
+        compile("org.springframework:org.springframework.context:$springVersion") { transitive = false }
     }
 }
 
