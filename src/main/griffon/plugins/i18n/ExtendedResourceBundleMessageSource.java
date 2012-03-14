@@ -62,9 +62,11 @@ public class ExtendedResourceBundleMessageSource extends ResourceBundleMessageSo
         List<ResourceBundle> bundles = new ArrayList<ResourceBundle>();
         try {
             Resource[] resources = resolver.getResources("classpath*:/" + filename + ".properties");
-            LOG.trace("Found " + resources.length + " matches for classpath *:/" + filename + ".properties");
+            if (LOG.isTraceEnabled()) {
+                LOG.trace("Found " + resources.length + " matches for classpath *:/" + filename + ".properties");
+            }
             for (Resource resource : resources) {
-                LOG.trace("Initializing bundle with " + resource.getURI());
+                if (LOG.isTraceEnabled()) LOG.trace("Initializing bundle with " + resource.getURI());
                 bundles.add(new PropertyResourceBundle(resource.getInputStream()));
             }
         } catch (IOException e) {

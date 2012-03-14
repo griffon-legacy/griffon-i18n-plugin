@@ -15,16 +15,6 @@ griffon.project.dependency.resolution = {
     log "warn" // log level of Ivy resolver, either 'error', 'warn', 'info', 'debug' or 'verbose'
     repositories {
         griffonHome()
-
-        // uncomment the below to enable remote dependency resolution
-        // from public Maven repositories
-        //mavenLocal()
-        //mavenCentral()
-        //mavenRepo "http://snapshots.repository.codehaus.org"
-        //mavenRepo "http://repository.codehaus.org"
-        //mavenRepo "http://download.java.net/maven/2/"
-        //mavenRepo "http://repository.jboss.com/maven2/"
-
         mavenRepo 'http://repository.springsource.com/maven/bundles/release'
 
         // pluginDirPath is only available when installed
@@ -32,12 +22,11 @@ griffon.project.dependency.resolution = {
         // flatDir name: "${pluginName}LibDir", dirs: ["${basePath}lib"]
     }
     dependencies {
-        // specify dependencies here under either 'build', 'compile', 'runtime' or 'test' scopes eg.
-
-        def springVersion = '3.0.5.RELEASE'
-        compile("org.springframework:org.springframework.core:$springVersion") { transitive = false }
-        compile("org.springframework:org.springframework.beans:$springVersion") { transitive = false }
-        compile("org.springframework:org.springframework.context:$springVersion") { transitive = false }
+        compile("org.springframework:org.springframework.core:$springVersion",
+                "org.springframework:org.springframework.beans:$springVersion",
+                "org.springframework:org.springframework.context:$springVersion") {
+            transitive = false
+        }
     }
 }
 
