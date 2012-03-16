@@ -30,8 +30,8 @@ class I18nGriffonAddon {
     void addonInit(GriffonApplication app) {
         List<String> basenames = app.config.i18n?.basenames ?: [DEFAULT_I18N_FILE]
         if (!basenames.contains(DEFAULT_I18N_FILE)) basenames = [DEFAULT_I18N_FILE] + basenames
-        org.springframework.context.MessageSource msgSrc = new ExtendedResourceBundleMessageSource();
-        msgSrc.basenames = basenames as String[]
-        MessageSourceHolder.registerMessageSource(PROVIDER_NAME, new DelegatingMessageSource(msgSrc))
+        org.springframework.context.MessageSource messageSource = new ExtendedResourceBundleMessageSource()
+        messageSource.basenames = basenames as String[]
+        MessageSourceHolder.instance.registerMessageSource(PROVIDER_NAME, new DelegatingMessageSource(messageSource))
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 the original author or authors.
+ * Copyright 2010-2012 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -76,7 +76,7 @@ public class DelegatingMessageSource implements MessageSource {
         return messageSource.getMessage(key, EMPTY_ARGS, defaultMessage, locale);
     }
 
-    public String getMessage(String key, List<?> args) throws NoSuchMessageException {
+    public String getMessage(String key, List<Object> args) throws NoSuchMessageException {
         try {
             return messageSource.getMessage(key, args.toArray(new Object[args.size()]), locale());
         } catch (org.springframework.context.NoSuchMessageException e) {
@@ -84,11 +84,11 @@ public class DelegatingMessageSource implements MessageSource {
         }
     }
 
-    public String getMessage(String key, List<?> args, String defaultMessage) {
+    public String getMessage(String key, List<Object> args, String defaultMessage) {
         return messageSource.getMessage(key, args.toArray(new Object[args.size()]), defaultMessage, locale());
     }
 
-    public String getMessage(String key, List<?> args, Locale locale) throws NoSuchMessageException {
+    public String getMessage(String key, List<Object> args, Locale locale) throws NoSuchMessageException {
         try {
             return messageSource.getMessage(key, args.toArray(new Object[args.size()]), locale);
         } catch (org.springframework.context.NoSuchMessageException e) {
@@ -96,7 +96,7 @@ public class DelegatingMessageSource implements MessageSource {
         }
     }
 
-    public String getMessage(String key, List<?> args, String defaultMessage, Locale locale) {
+    public String getMessage(String key, List<Object> args, String defaultMessage, Locale locale) {
         return messageSource.getMessage(key, args.toArray(new Object[args.size()]), defaultMessage, locale);
     }
 
