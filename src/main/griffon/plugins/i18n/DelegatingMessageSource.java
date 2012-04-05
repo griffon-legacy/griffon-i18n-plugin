@@ -76,7 +76,7 @@ public class DelegatingMessageSource implements MessageSource {
         return messageSource.getMessage(key, EMPTY_ARGS, defaultMessage, locale);
     }
 
-    public String getMessage(String key, List<Object> args) throws NoSuchMessageException {
+    public String getMessage(String key, List args) throws NoSuchMessageException {
         try {
             return messageSource.getMessage(key, args.toArray(new Object[args.size()]), locale());
         } catch (org.springframework.context.NoSuchMessageException e) {
@@ -84,11 +84,11 @@ public class DelegatingMessageSource implements MessageSource {
         }
     }
 
-    public String getMessage(String key, List<Object> args, String defaultMessage) {
+    public String getMessage(String key, List args, String defaultMessage) {
         return messageSource.getMessage(key, args.toArray(new Object[args.size()]), defaultMessage, locale());
     }
 
-    public String getMessage(String key, List<Object> args, Locale locale) throws NoSuchMessageException {
+    public String getMessage(String key, List args, Locale locale) throws NoSuchMessageException {
         try {
             return messageSource.getMessage(key, args.toArray(new Object[args.size()]), locale);
         } catch (org.springframework.context.NoSuchMessageException e) {
@@ -96,7 +96,7 @@ public class DelegatingMessageSource implements MessageSource {
         }
     }
 
-    public String getMessage(String key, List<Object> args, String defaultMessage, Locale locale) {
+    public String getMessage(String key, List args, String defaultMessage, Locale locale) {
         return messageSource.getMessage(key, args.toArray(new Object[args.size()]), defaultMessage, locale);
     }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2010-2011 the original author or authors.
+ * Copyright 2010-2012 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the 'License');
  * you may not use this file except in compliance with the License.
@@ -92,7 +92,7 @@ From any object that has access to the application instance
 From Java code
 
     import griffon.plugins.i18n.MessageSourceHolder
-    MessageSourceHolder.getMessageSource().getMessage("some.message.code");
+    MessageSourceHolder.getInstance().getMessageSource().getMessage("some.message.code");
 
 Configuration
 -------------
